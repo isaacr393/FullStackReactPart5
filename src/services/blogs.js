@@ -8,8 +8,8 @@ const login = async credentials => {
   return response.data
 }
 
-const setToken = token => {
-  token = `Bearer ${token}`
+const setToken = newToken => {
+  token = `Bearer ${newToken}`
 }
 
 const getAll = () => {
@@ -17,6 +17,14 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
-const exports = { getAll, login, setToken }
+const create = async (blog) => {
+  const config = {
+    headers: { Authorization: token },  
+  }
+  let response = await axios.post('/api/blogs', blog, config)
+  return response.data
+}
+
+const exports = { getAll, login, setToken, create }
 
 export default exports

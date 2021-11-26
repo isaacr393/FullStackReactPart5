@@ -20,8 +20,9 @@ const App = () => {
   useEffect( () => {
     let user = window.localStorage.getItem('user')
     if(user){
-      setUser(JSON.parse(user))
-      blogService.setToken(JSON.parse(user).token)
+      let parsedUser = JSON.parse(user)
+      setUser(parsedUser)
+      blogService.setToken(parsedUser.token)
     }
   },[])
 
@@ -51,6 +52,17 @@ const App = () => {
     window.localStorage.removeItem('user')
   }
 
+  const handleSubmitBlog = async (e, blog) =>{
+    e.preventDefault()
+    try {
+      let response = await blogService.create(blog)
+      setBlogs([...blogs, response])
+    } catch (err) {
+      setErrMessage(err.response.data.error)
+      setTimeout( () => setErrMessage(''), 5000)
+    }
+  } 
+
   if( !user ){
     return (
       <>
@@ -67,7 +79,11 @@ const App = () => {
   return (
     <div>      
       { `${user.user} logged in ` } <button onClick={handleLogout} >logout</button>
-      <br />
+      <br /> <br />
+
+      <BlogForm onSubmit={handleSubmitBlog}/>
+      <br /> <br />
+
       <span style={{color: 'red'}} >{errMessage}</span>
 
       <h2>blogs</h2>
@@ -93,5 +109,23 @@ const LoginForm = ({onSubmit, username, handleUsernameChange, password, handlePa
   )
 }
 
+
+const BlogForm = ({onSubmit}) => {
+  const [blog, setBlog] = useState({title:'', author:'', url:''})
+
+  return (
+    <form onSubmit={ (e) => onSubmit(e, blog) } >
+
+      <label htmlFor="titleInput">Title</label>
+      <input id="titleInput" type="text" value={blog.title} onChange={({target}) => setBlog({...blog, title:target.value})} /> <br />
+      <label htmlFor="authorInput">Author</label>
+      <input id="authorInput" type="text" value={blog.author} onChange={({target}) => setBlog({...blog, author:target.value})} /> <br />
+      <label htmlFor="urlInput">Url</label>
+      <input id="urlInput" type="text" value={blog.url} onChange={({target}) => setBlog({...blog, url:target.value})} /> <br />
+
+      <button onClick={ (e) => onSubmit(e, blog) }>Submit</button>
+    </form>
+  )
+}
 
 export default App
