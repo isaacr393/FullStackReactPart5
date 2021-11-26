@@ -9,6 +9,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState('')
   const [errMessage, setErrMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
 
 
   useEffect(() => {
@@ -57,6 +58,8 @@ const App = () => {
     try {
       let response = await blogService.create(blog)
       setBlogs([...blogs, response])
+      setSuccessMessage('Blog created Successfully')
+      setTimeout( () => setSuccessMessage(''), 5000)
     } catch (err) {
       setErrMessage(err.response.data.error)
       setTimeout( () => setErrMessage(''), 5000)
@@ -85,6 +88,7 @@ const App = () => {
       <br /> <br />
 
       <span style={{color: 'red'}} >{errMessage}</span>
+      <span style={{color: 'green'}} >{successMessage}</span>
 
       <h2>blogs</h2>
       {blogs.map(blog =>
@@ -113,8 +117,13 @@ const LoginForm = ({onSubmit, username, handleUsernameChange, password, handlePa
 const BlogForm = ({onSubmit}) => {
   const [blog, setBlog] = useState({title:'', author:'', url:''})
 
+  const handleSubmit = (e) => {    
+    onSubmit(e, blog)
+    setBlog({title:'', author:'', url:''})
+  }
+
   return (
-    <form onSubmit={ (e) => onSubmit(e, blog) } >
+    <form onSubmit={ handleSubmit } >
 
       <label htmlFor="titleInput">Title</label>
       <input id="titleInput" type="text" value={blog.title} onChange={({target}) => setBlog({...blog, title:target.value})} /> <br />
@@ -123,7 +132,7 @@ const BlogForm = ({onSubmit}) => {
       <label htmlFor="urlInput">Url</label>
       <input id="urlInput" type="text" value={blog.url} onChange={({target}) => setBlog({...blog, url:target.value})} /> <br />
 
-      <button onClick={ (e) => onSubmit(e, blog) }>Submit</button>
+      <button onClick={ handleSubmit }>Submit</button>
     </form>
   )
 }
