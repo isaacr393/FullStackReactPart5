@@ -43,6 +43,14 @@ const App = () => {
     }
   }
 
+  const handleLogout = ()=>{
+    setUser('')
+    setUsername('')
+    setPassword('')
+    blogService.setToken('')
+    window.localStorage.removeItem('user')
+  }
+
   if( !user ){
     return (
       <>
@@ -58,7 +66,7 @@ const App = () => {
 
   return (
     <div>      
-      { `${user.user} logged in ` }
+      { `${user.user} logged in ` } <button onClick={handleLogout} >logout</button>
       <br />
       <span style={{color: 'red'}} >{errMessage}</span>
 
