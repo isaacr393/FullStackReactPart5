@@ -80,6 +80,19 @@ const App = () => {
     }
   }
 
+  const handleRemove = async (id) => {
+    try {      
+      await blogService.remove(id)
+      setBlogs( blogs.filter( prevBlog => prevBlog.id !== id  ) )
+      setSuccessMessage('Blog Removed ')
+      setTimeout( () => setSuccessMessage(''), 5000)
+    } catch (err) {
+      console.log(err.response)
+      setErrMessage(err.response.data.error)
+      setTimeout( () => setErrMessage(''), 5000)
+    }
+  }
+
   if( !user ){
     return (
       <>
@@ -107,7 +120,7 @@ const App = () => {
 
       <h2>blogs</h2>
       {blogSorted.map(blog =>
-        <Blog key={blog.id} blog={blog} handleLike={handleLike} />
+        <Blog key={blog.id} blog={blog} handleLike={handleLike} handleRemove={handleRemove}/>
       )}
     </div>
   )

@@ -33,6 +33,14 @@ const update = async (id, blog) => {
   return response.data
 }
 
-const exports = { getAll, login, setToken, create, update }
+const remove = async (id) => {
+  const config = {
+    headers: { Authorization: token },  
+  }
+  let response = await axios.delete(`/api/blogs/${id}`, config)
+  return response.data
+}
+
+const exports = { getAll, login, setToken, create, update, remove }
 
 export default exports
