@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
+import BlogForm from './BlogForm'
+import Toggable from './Toggable'
 
 
 const App = () => {
@@ -83,9 +85,9 @@ const App = () => {
     <div>      
       { `${user.user} logged in ` } <button onClick={handleLogout} >logout</button>
       <br /> <br />
-
-      <BlogForm onSubmit={handleSubmitBlog}/>
-      <br /> <br />
+      <Toggable showVisibilityText='Create Blog' hiddenVisibilityText='Cancel Register'>
+        <BlogForm onSubmit={handleSubmitBlog}/>
+      </Toggable>      
 
       <span style={{color: 'red'}} >{errMessage}</span>
       <span style={{color: 'green'}} >{successMessage}</span>
@@ -109,30 +111,6 @@ const LoginForm = ({onSubmit, username, handleUsernameChange, password, handlePa
       <input id='passwordInput' type="text" value={password} onChange={handlePasswordChange} /> <br />
 
       <button onClick={onSubmit}>Log in</button>
-    </form>
-  )
-}
-
-
-const BlogForm = ({onSubmit}) => {
-  const [blog, setBlog] = useState({title:'', author:'', url:''})
-
-  const handleSubmit = (e) => {    
-    onSubmit(e, blog)
-    setBlog({title:'', author:'', url:''})
-  }
-
-  return (
-    <form onSubmit={ handleSubmit } >
-
-      <label htmlFor="titleInput">Title</label>
-      <input id="titleInput" type="text" value={blog.title} onChange={({target}) => setBlog({...blog, title:target.value})} /> <br />
-      <label htmlFor="authorInput">Author</label>
-      <input id="authorInput" type="text" value={blog.author} onChange={({target}) => setBlog({...blog, author:target.value})} /> <br />
-      <label htmlFor="urlInput">Url</label>
-      <input id="urlInput" type="text" value={blog.url} onChange={({target}) => setBlog({...blog, url:target.value})} /> <br />
-
-      <button onClick={ handleSubmit }>Submit</button>
     </form>
   )
 }
