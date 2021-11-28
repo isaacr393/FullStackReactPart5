@@ -25,6 +25,7 @@ const Blog = ({blog, handleLike}) => {
       </button>
       
       <div style={detailDisplayStyle}>
+        {blog.url} <br />
         {blog.author} <br />
         {blog.likes} <button onClick={ like } >like</button>
       </div>      

@@ -93,6 +93,7 @@ const App = () => {
     )
   }
 
+  const blogSorted = blogs.sort( (prev, current) => current.likes - prev.likes)
   return (
     <div>      
       { `${user.user} logged in ` } <button onClick={handleLogout} >logout</button>
@@ -105,7 +106,7 @@ const App = () => {
       <span style={{color: 'green'}} >{successMessage}</span>
 
       <h2>blogs</h2>
-      {blogs.map(blog =>
+      {blogSorted.map(blog =>
         <Blog key={blog.id} blog={blog} handleLike={handleLike} />
       )}
     </div>
