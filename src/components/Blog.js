@@ -1,9 +1,20 @@
 import React, {useState} from 'react'
 
-const Blog = ({blog}) => {
+const Blog = ({blog, handleLike}) => {
   const [showDetail, setShowDetail] = useState(false)
 
   const toggleDetails = () => setShowDetail(!showDetail)
+
+  const like = () => {
+
+    let updateBlog = {
+      likes: blog.likes + 1,
+      author: blog.author,
+      title: blog.title,
+      id: blog.id
+    }
+    handleLike( updateBlog ) 
+  }
 
   const detailDisplayStyle = { display: showDetail?'':'none' }
   return(
@@ -15,7 +26,7 @@ const Blog = ({blog}) => {
       
       <div style={detailDisplayStyle}>
         {blog.author} <br />
-        {blog.likes} <button>like</button>
+        {blog.likes} <button onClick={ like } >like</button>
       </div>      
     </div>
   ) 
