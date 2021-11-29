@@ -70,8 +70,8 @@ const App = () => {
 
   const handleLike = async (blog) =>{
     try {
-      await blogService.update(blog.id, blog)
-      setBlogs( blogs.map( prevBlog => prevBlog.id === blog.id?blog:prevBlog  ) )
+      let updatedBlog = await blogService.update(blog.id, blog)
+      setBlogs( blogs.map( prevBlog => prevBlog.id === blog.id?updatedBlog:prevBlog  ) )
       setSuccessMessage('Blog Liked ')
       setTimeout( () => setSuccessMessage(''), 5000)
     } catch (err) {
@@ -120,7 +120,7 @@ const App = () => {
 
       <h2>blogs</h2>
       {blogSorted.map(blog =>
-        <Blog key={blog.id} blog={blog} handleLike={handleLike} handleRemove={handleRemove}/>
+        <Blog key={blog.id} blog={blog} handleLike={handleLike} handleRemove={handleRemove} user={user}/>
       )}
     </div>
   )
