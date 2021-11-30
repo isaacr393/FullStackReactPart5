@@ -55,8 +55,7 @@ const App = () => {
     window.localStorage.removeItem('user')
   }
 
-  const handleSubmitBlog = async (e, blog) =>{
-    e.preventDefault()
+  const handleSubmitBlog = async (blog) =>{    
     try {
       let response = await blogService.create(blog)
       setBlogs([...blogs, response])

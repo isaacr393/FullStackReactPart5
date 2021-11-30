@@ -3,8 +3,9 @@ import React, { useState} from "react"
 const BlogForm = ({onSubmit}) => {
     const [blog, setBlog] = useState({title:'', author:'', url:''})
   
-    const handleSubmit = (e) => {    
-      onSubmit(e, blog)
+    const handleSubmit = (e) => {
+      e.preventDefault()    
+      onSubmit(blog)
       setBlog({title:'', author:'', url:''})
     }
   
