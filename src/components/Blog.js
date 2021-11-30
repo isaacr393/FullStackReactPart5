@@ -21,11 +21,11 @@ const Blog = ({blog, handleLike, handleRemove, user}) => {
   return(
     <div style={{border:'1px solid black', margin:'10px'}}>
       {blog.title}  &nbsp;
-      <button onClick={toggleDetails} >
+      <button onClick={toggleDetails} className="showDetailsButton" >
         {showDetail?'Hide':'Details'}
       </button>
       
-      <div style={detailDisplayStyle}>
+      <div style={detailDisplayStyle} className="DetailsBlogs" >
         {blog.url} <br />
         {blog.author} <br />
         {blog.likes} <button onClick={ like } >like</button> <br />
