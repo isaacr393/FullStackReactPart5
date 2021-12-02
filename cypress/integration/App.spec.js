@@ -42,6 +42,16 @@ describe( 'Blog App', () => {
             cy.get('#usernameInput').type('Isaac')
             cy.get('#passwordInput').type('123')
             cy.contains('Log in').click()
+
+            // CREATE THE BLOG
+            cy.contains('Create Blog').click()
+
+            cy.get('#titleInput').type('From Cypress')
+            cy.get('#authorInput').type('Isaac')
+            cy.get('#urlInput').type('miaddress@mail.com')
+
+            cy.contains('Submit').click()
+                        
         })
 
         it('A blog can be created', () => {
@@ -56,20 +66,20 @@ describe( 'Blog App', () => {
             cy.contains('From Cypress')
         })
 
-        it.only('A blog can be liked', () => {
-            cy.contains('Create Blog').click()
+        it('A blog can be liked', () => {            
 
-            cy.get('#titleInput').type('From Cypress')
-            cy.get('#authorInput').type('Isaac')
-            cy.get('#urlInput').type('miaddress@mail.com')
-
-            cy.contains('Submit').click()
-            
             cy.contains('Details').click()
             cy.contains('like').click()
 
-            cy.contains('From Cypress')
-            .contains('Blog Liked')
+            cy.contains('Blog Liked')
+        })
+
+        it.only('A blog can be deleted', () => {            
+            cy.contains('Details').click()
+            cy.contains('Delete').click()
+            cy.get('html')
+            .should('not.contain', 'From Cypress')
+
         })
     })
 })

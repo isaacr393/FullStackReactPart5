@@ -58,7 +58,9 @@ const App = () => {
   const handleSubmitBlog = async (blog) =>{    
     try {
       let response = await blogService.create(blog)
-      setBlogs([...blogs, response])
+      let newBlog = response
+      newBlog.user = user
+      setBlogs([...blogs, newBlog])
       setSuccessMessage('Blog created Successfully')
       setTimeout( () => setSuccessMessage(''), 5000)
     } catch (err) {
