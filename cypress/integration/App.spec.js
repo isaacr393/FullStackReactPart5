@@ -28,7 +28,7 @@ describe( 'Blog App', () => {
             cy.contains('Isaac logged in')
         })
 
-        it.only('Fails with wrongs credentials', () => {
+        it('Fails with wrongs credentials', () => {
             cy.get('#usernameInput').type('Isaac')
             cy.get('#passwordInput').type('wrong')
             cy.contains('Log in').click()
@@ -44,7 +44,7 @@ describe( 'Blog App', () => {
             cy.contains('Log in').click()
         })
 
-        it.only('A blog can be created', () => {
+        it('A blog can be created', () => {
             cy.contains('Create Blog').click()
 
             cy.get('#titleInput').type('From Cypress')
@@ -54,6 +54,22 @@ describe( 'Blog App', () => {
             cy.contains('Submit').click()
 
             cy.contains('From Cypress')
+        })
+
+        it.only('A blog can be liked', () => {
+            cy.contains('Create Blog').click()
+
+            cy.get('#titleInput').type('From Cypress')
+            cy.get('#authorInput').type('Isaac')
+            cy.get('#urlInput').type('miaddress@mail.com')
+
+            cy.contains('Submit').click()
+            
+            cy.contains('Details').click()
+            cy.contains('like').click()
+
+            cy.contains('From Cypress')
+            .contains('Blog Liked')
         })
     })
 })
