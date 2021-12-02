@@ -36,4 +36,24 @@ describe( 'Blog App', () => {
             cy.contains('Invalid Credentials')
         })
     })
+
+    describe('when logged in ', () => {
+        beforeEach( () => {
+            cy.get('#usernameInput').type('Isaac')
+            cy.get('#passwordInput').type('123')
+            cy.contains('Log in').click()
+        })
+
+        it.only('A blog can be created', () => {
+            cy.contains('Create Blog').click()
+
+            cy.get('#titleInput').type('From Cypress')
+            cy.get('#authorInput').type('Isaac')
+            cy.get('#urlInput').type('miaddress@mail.com')
+
+            cy.contains('Submit').click()
+
+            cy.contains('From Cypress')
+        })
+    })
 })
