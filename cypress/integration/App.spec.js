@@ -74,12 +74,34 @@ describe( 'Blog App', () => {
             cy.contains('Blog Liked')
         })
 
-        it.only('A blog can be deleted', () => {            
+        it('A blog can be deleted', () => {            
             cy.contains('Details').click()
             cy.contains('Delete').click()
             cy.get('html')
             .should('not.contain', 'From Cypress')
 
+        })
+
+        it.only('Blogs are ordered by likes', () => {
+            cy.get('#titleInput').type('From Cypress 2')
+            cy.get('#authorInput').type('Isaac 2')
+            cy.get('#urlInput').type('miaddress2@mail.com')
+
+            cy.contains('Submit').click()
+
+            /* cy.contains('Details').click()
+            cy.contains('like').click()         */    
+            cy.get('.blogContainer').should('have.length', 2)
+            cy.get('.blogContainer').eq(1)
+            .contains('Details').click()
+            cy.get('.blogContainer').eq(1)
+            .contains('like').click()
+
+            
+            cy.get('.blogContainer').eq(0)
+            .get('.DetailsBlogs .likesAmount')
+            .should('contain','1')
+            
         })
     })
 })

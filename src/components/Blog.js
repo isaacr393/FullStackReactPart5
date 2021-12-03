@@ -19,16 +19,16 @@ const Blog = ({blog, handleLike, handleRemove, user}) => {
 
   const detailDisplayStyle = { display: showDetail?'':'none' }
   return(
-    <div style={{border:'1px solid black', margin:'10px'}}>
+    <div style={{border:'1px solid black', margin:'10px'}} className="blogContainer">
       {blog.title}  &nbsp;
       <button onClick={toggleDetails} className="showDetailsButton" >
         {showDetail?'Hide':'Details'}
       </button>
       
       <div style={detailDisplayStyle} className="DetailsBlogs" >
-        {blog.url} <br />
-        {blog.author} <br />
-        {blog.likes} <button onClick={ like } className='likeBlogButton' >like</button> <br />
+        <span>{blog.url} </span> <br />
+        <span>{blog.author} </span> <br />
+        <span className="likesAmount">{blog.likes} </span> <button onClick={ like } className='likeBlogButton' >like</button> <br />
         { user.username === blog.user.username &&  (<button onClick={ ( ) => handleRemove(blog.id)} > Delete </button>) }
       </div>      
     </div>
